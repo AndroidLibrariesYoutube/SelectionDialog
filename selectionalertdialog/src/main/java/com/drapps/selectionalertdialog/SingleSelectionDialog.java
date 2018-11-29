@@ -18,8 +18,8 @@ public class SingleSelectionDialog extends AppCompatActivity {
 
     Dialog dialog;
     private Context context;
-    private  ArrayList<String> list;
-    private  String headerTitle = "";
+    private ArrayList<String> list;
+    private String headerTitle = "";
 
 
     @Override
@@ -48,11 +48,8 @@ public class SingleSelectionDialog extends AppCompatActivity {
     public void show() {
         //Custom pop up dialog for selecting options
         dialog = new Dialog(context);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View convertView = inflater.inflate(R.layout.single_selection_dialog, null);
+        final View convertView = LayoutInflater.from(context).inflate(R.layout.single_selection_dialog, null);
         dialog.setContentView(convertView);
-
-
         dialog.show();
     }
 
