@@ -19,7 +19,8 @@ public class SingleSelectionDialog extends AppCompatActivity {
     Dialog dialog;
     private Context context;
     private ArrayList<String> list;
-    private String headerTitle = "";
+    private String headerTitle = "Select";
+    private Boolean isSearchEnabled = false;
 
 
     @Override
@@ -32,7 +33,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
         this.context = mContext;
     }
 
-    public void create(ArrayList<String> dataList) {
+    public void setList(ArrayList<String> dataList) {
         this.list = dataList;
     }
 
@@ -44,13 +45,30 @@ public class SingleSelectionDialog extends AppCompatActivity {
         }
     }
 
+    public void enableSearch(Boolean value) {
+        isSearchEnabled = value;
+    }
 
     public void show() {
         //Custom pop up dialog for selecting options
-        dialog = new Dialog(context);
-        final View convertView = LayoutInflater.from(context).inflate(R.layout.single_selection_dialog, null);
-        dialog.setContentView(convertView);
-        dialog.show();
+        try {
+            dialog = new Dialog(context);
+            final View convertView = LayoutInflater.from(context).inflate(R.layout.single_selection_dialog, null);
+            dialog.setContentView(convertView);
+            TextView tvTitle = convertView.findViewById(R.id.tv_title);
+            ImageView imgCancel = convertView.findViewById(R.id.img_cancel_single_dialog);
+            tvTitle.setText(headerTitle);
+            imgCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
