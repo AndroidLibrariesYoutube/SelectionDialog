@@ -19,7 +19,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
     Dialog dialog;
     private static Context context;
     private static ArrayList<String> list;
-    private static String title = "";
+    private static String headerTitle = "";
 
 
     @Override
@@ -28,19 +28,19 @@ public class SingleSelectionDialog extends AppCompatActivity {
         setContentView(R.layout.single_selection_dialog);
     }
 
-    public static void with(Context mContext) {
+    public void with(Context mContext) {
         context = mContext;
     }
 
-    public static void create(ArrayList<String> dataList) {
+    public void create(ArrayList<String> dataList) {
         list = dataList;
     }
 
-    public static void setTitle(String mTitle) {
+    public void setTitle(String mTitle) {
         if (mTitle != null && !mTitle.equals("")) {
-            title = mTitle;
+            headerTitle = mTitle;
         } else {
-            title = "Select";
+            headerTitle = "Select";
         }
     }
 
