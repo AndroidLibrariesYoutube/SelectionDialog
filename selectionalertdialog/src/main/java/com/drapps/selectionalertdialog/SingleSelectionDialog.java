@@ -17,9 +17,9 @@ import java.util.ArrayList;
 public class SingleSelectionDialog extends AppCompatActivity {
 
     Dialog dialog;
-    private static Context context;
-    private static ArrayList<String> list;
-    private static String headerTitle = "";
+    private Context context;
+    private  ArrayList<String> list;
+    private  String headerTitle = "";
 
 
     @Override
@@ -29,18 +29,18 @@ public class SingleSelectionDialog extends AppCompatActivity {
     }
 
     public void with(Context mContext) {
-        context = mContext;
+        this.context = mContext;
     }
 
     public void create(ArrayList<String> dataList) {
-        list = dataList;
+        this.list = dataList;
     }
 
     public void setTitle(String mTitle) {
         if (mTitle != null && !mTitle.equals("")) {
-            headerTitle = mTitle;
+            this.headerTitle = mTitle;
         } else {
-            headerTitle = "Select";
+            this.headerTitle = "Select";
         }
     }
 
@@ -48,7 +48,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
     public void show() {
         //Custom pop up dialog for selecting options
         dialog = new Dialog(context);
-        LayoutInflater inflater = getLayoutInflater();
+        LayoutInflater inflater = this.getLayoutInflater();
         final View convertView = inflater.inflate(R.layout.single_selection_dialog, null);
         dialog.setContentView(convertView);
 
