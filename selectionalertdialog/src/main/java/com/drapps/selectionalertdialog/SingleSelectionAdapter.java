@@ -1,6 +1,7 @@
 package com.drapps.selectionalertdialog;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +16,26 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
     private List<String> dataList = new ArrayList<>();
     Context context;
     String currentField;
+    int color;
 
     public class SingleSelectionHolder extends RecyclerView.ViewHolder {
 
         public RadioButton radioButton;
-
+        public View line;
 
         SingleSelectionHolder(View view) {
             super(view);
             radioButton = view.findViewById(R.id.radio_btn_single_selection);
-
+            line = view.findViewById(R.id.view_single_selection);
         }
     }
 
 
-    public SingleSelectionAdapter(ArrayList<String> contentList, Context context, String currentField) {
+    public SingleSelectionAdapter(ArrayList<String> contentList, Context context, String currentField, int radioColor) {
         this.context = context;
         this.dataList = contentList;
         this.currentField = currentField;
-
+        this.color = radioColor;
     }
 
     @Override
@@ -45,6 +47,15 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
     }
 
     public void onBindViewHolder(SingleSelectionHolder holder, int position) {
+
+        if (color != 0) {
+            try {
+                holder.radioButton.setButtonTintList(ColorStateList.valueOf(color));
+                holder.line.setBackgroundColor(color);
+            } catch (Exception e) {
+
+            }
+        }
         if (dataList.get(position).equals(currentField)) {
             holder.setIsRecyclable(false);
             holder.radioButton.setChecked(true);
