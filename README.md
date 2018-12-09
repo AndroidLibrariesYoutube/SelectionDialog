@@ -1,1 +1,2 @@
-"# SelectionDialog" 
+Selection Dialog Android library.
+
