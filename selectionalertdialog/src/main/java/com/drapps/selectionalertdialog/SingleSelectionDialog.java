@@ -27,7 +27,6 @@ public class SingleSelectionDialog extends AppCompatActivity {
     Dialog dialog;
     private Context context;
     private ArrayList<String> list = new ArrayList<>();
-    private ArrayList<String> original_list = new ArrayList<>();
     private ArrayList<String> temp_data_list = new ArrayList<>();
     private String headerTitle = "Select";
     private Boolean isSearchEnabled = false;
@@ -52,7 +51,6 @@ public class SingleSelectionDialog extends AppCompatActivity {
 
     public void setContent(ArrayList<String> contentProvide) {
         list = contentProvide;
-        original_list = contentProvide;
         temp_data_list.clear();
         temp_data_list = contentProvide;
     }
@@ -219,10 +217,10 @@ public class SingleSelectionDialog extends AppCompatActivity {
     }
 
     public String getCurrentPosition(String field) {
-        if (original_list != null && original_list.size() > 0) {
+        if (list != null && list.size() > 0) {
 
-            for (int i = 0; i < original_list.size(); i++) {
-                if (field.equals(original_list.get(i))) {
+            for (int i = 0; i < list.size(); i++) {
+                if (field.equals(list.get(i))) {
                     return String.valueOf(i);
                 }
             }

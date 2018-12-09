@@ -1,6 +1,7 @@
 package com.drapps.selectionalertdialog;
 
-public class MultiSelection  {
+public class MultiSelection {
+
 
     private Boolean check = false;
     private String title;
