@@ -29,6 +29,8 @@ dependencies {
 ## How do I use Single Selection Dialog?
 
 ![Screenshot 1](https://github.com/AndroidLibrariesYoutube/SelectionDialog/blob/master/screenshot1.png)
+![Screenshot 2](https://github.com/AndroidLibrariesYoutube/SelectionDialog/blob/master/screenshot2.png)
+![Screenshot 3](https://github.com/AndroidLibrariesYoutube/SelectionDialog/blob/master/screenshot3.png)
 
 Using SelectionDialog is pretty simple.
 
