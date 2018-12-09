@@ -136,8 +136,8 @@ Get values, selected item list,  TAG and error from dialog.
     }
 
 
-[## Author
-Dheeraj Rijhwani (Android Developer)](https://www.youtube.com/channel/UCEhHMXJs1V4mXGfJ4pSWaoA)
+## Author
+[Dheeraj Rijhwani (Android Developer)](https://www.youtube.com/channel/UCEhHMXJs1V4mXGfJ4pSWaoA)
 
 
 
