@@ -86,7 +86,7 @@ Get value, positions, TAG and error from dialog.
 ![Screenshot 4](https://github.com/AndroidLibrariesYoutube/SelectionDialog/blob/master/screenshot4.png)
 ![Screenshot 5](https://github.com/AndroidLibrariesYoutube/SelectionDialog/blob/master/screenshot5.png)
 
-Using MultiSelection is also not that though.
+Using MultiSelection is also not that tough.
 
 **Step 1**
 Create class of SingleSelectionDialog for using the Single Selection.
