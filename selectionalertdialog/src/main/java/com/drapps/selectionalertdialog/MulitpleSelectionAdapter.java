@@ -1,6 +1,7 @@
 package com.drapps.selectionalertdialog;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +17,27 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
     private List<MultiSelection> dataList;
     Context context;
     List<MultiSelection> currentField;
-    String assetsTitle = "";
-
+    String selectedItems = "";
+    int color;
     public class MulitpleSelectionHolder extends RecyclerView.ViewHolder {
 
         public CheckBox checkBox;
+        View line;
 
         MulitpleSelectionHolder(View view) {
             super(view);
             checkBox = view.findViewById(R.id.checkbox_dialog);
-
+            line = view.findViewById(R.id.linear_multi_dialog);
         }
     }
 
 
-    public MulitpleSelectionAdapter(List<MultiSelection> contentList, String title, Context context) {
+    public MulitpleSelectionAdapter(List<MultiSelection> contentList, String title, Context context,int checkBoxColor) {
         this.context = context;
         this.dataList = contentList;
-        this.assetsTitle = title;
-        checkExist(assetsTitle);
+        this.color =  checkBoxColor;
+        this.selectedItems = title;
+        checkExist(selectedItems);
 
     }
 
@@ -48,7 +51,14 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
 
     public void onBindViewHolder(final MulitpleSelectionAdapter.MulitpleSelectionHolder holder, final int position) {
         holder.checkBox.setText(dataList.get(position).getTitle());
+        if (color != 0) {
+            try {
+                holder.checkBox.setButtonTintList(ColorStateList.valueOf(color));
+                holder.line.setBackgroundColor(color);
+            } catch (Exception e) {
 
+            }
+        }
 
         holder.setIsRecyclable(false);
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +86,8 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
     public boolean checkExist(String dataString) {
         if (dataList != null && dataList.size() > 0) {
             for (int i = 0; i < dataList.size(); i++) {
-                List<String> assets = new ArrayList<String>(Arrays.asList(assetsTitle.split(",")));
-                if (assets != null && assets.size() > 0 && !assetsTitle.equals("")) {
+                List<String> assets = new ArrayList<String>(Arrays.asList(selectedItems.split(",")));
+                if (assets != null && assets.size() > 0 && !selectedItems.equals("")) {
                     for (int j = 0; j < assets.size(); j++) {
                         if (dataList.get(i).getTitle().equals(assets.get(j))) {
                             dataList.get(i).setCheck(true);

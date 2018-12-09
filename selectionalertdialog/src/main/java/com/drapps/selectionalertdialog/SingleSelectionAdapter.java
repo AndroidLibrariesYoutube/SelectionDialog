@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelectionAdapter.SingleSelectionHolder> {
     private List<String> dataList = new ArrayList<>();
-    Context context;
-    String currentField;
-    int color;
+    private Context context;
+    private String currentField;
+    private int color;
 
     public class SingleSelectionHolder extends RecyclerView.ViewHolder {
 
@@ -31,8 +31,8 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
     }
 
 
-    public SingleSelectionAdapter(ArrayList<String> contentList, Context context, String currentField, int radioColor) {
-        this.context = context;
+    public SingleSelectionAdapter(ArrayList<String> contentList, Context mContext, String currentField, int radioColor) {
+        this.context = mContext;
         this.dataList = contentList;
         this.currentField = currentField;
         this.color = radioColor;

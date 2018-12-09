@@ -4,21 +4,22 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.drapps.selectionalertdialog.MulitpleSelectionAdapter;
+import com.drapps.selectionalertdialog.MultiSelection;
+import com.drapps.selectionalertdialog.MultiSelectionListener;
+import com.drapps.selectionalertdialog.R;
+
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +32,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
     private ArrayList<MultiSelection> temp_data_list = new ArrayList<>();
     private String headerTitle = "Select";
     private Boolean isSearchEnabled = false;
-    SingleSelectionAdapter dialogAdapter;
+    MulitpleSelectionAdapter dialogAdapter;
     private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
     private int headerColor;
     MultiSelectionListener multiSelectionListener;
@@ -56,8 +57,10 @@ public class MultiSelectionDialog extends AppCompatActivity {
 
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                multiList.get(i).setTitle(list.get(i));
-                temp_data_list.get(i).setTitle(list.get(i));
+                MultiSelection multiSelection = new MultiSelection();
+                multiSelection.setTitle(list.get(i));
+                multiList.add(multiSelection);
+                temp_data_list.add(multiSelection);
             }
         }
 
@@ -71,16 +74,16 @@ public class MultiSelectionDialog extends AppCompatActivity {
         }
     }
 
-    public void enableSearch(Boolean value, String hint) {
-        isSearchEnabled = value;
-        hintText = hint;
-    }
+//    public void enableSearch(Boolean value, String hint) {
+//        isSearchEnabled = value;
+//        hintText = hint;
+//    }
 
     public void setColor(int color) {
         headerColor = color;
     }
 
-    public void setSelectedField(String selectedField) {
+    public void setSelectedFields(String selectedField) {
         currentField = selectedField;
     }
 
@@ -140,14 +143,16 @@ public class MultiSelectionDialog extends AppCompatActivity {
                 public void onClick(View view) {
                     String getAssetsValue = "";
                     String assetValue = "";
+                    ArrayList<String> temp_string_list  = new ArrayList<>();
                     if (multiList != null && multiList.size() > 0) {
                         for (int i = 0; i < multiList.size(); i++) {
                             if (multiList.get(i).getCheck()) {
+                                temp_string_list.add(multiList.get(i).getTitle());
                                 getAssetsValue += multiList.get(i).getTitle() + ",";
                                 assetValue = getAssetsValue.substring(0, getAssetsValue.length() - 1);
                             }
                         }
-                        multiSelectionListener.onMultiDialogItemsSelected(assetValue, tag);
+                        multiSelectionListener.onMultiDialogItemsSelected(assetValue, tag,temp_string_list);
                     }
 
                     dialog.dismiss();
@@ -185,14 +190,15 @@ public class MultiSelectionDialog extends AppCompatActivity {
 //                }
 ////            });
 //
-//            if (list != null && list.size() > 0) {
-//                dialogAdapter = new SingleSelectionAdapter(list, context, currentField, headerColor);
-//                recyclerView.setAdapter(dialogAdapter);
-//                dialog.show();
-//            } else {
-//                Toast.makeText(context, "List is empty", Toast.LENGTH_SHORT).show();
-//            }
+            if (list != null && list.size() > 0) {
+                dialogAdapter = new MulitpleSelectionAdapter(multiList,currentField,context,headerColor);
+                recyclerView.setAdapter(dialogAdapter);
+                dialog.show();
+            } else {
+                Toast.makeText(context, "List is empty", Toast.LENGTH_SHORT).show();
+            }
 
+            dialog.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
