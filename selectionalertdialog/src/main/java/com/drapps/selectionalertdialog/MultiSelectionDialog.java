@@ -143,7 +143,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
                 public void onClick(View view) {
                     String getAssetsValue = "";
                     String assetValue = "";
-                    ArrayList<String> temp_string_list  = new ArrayList<>();
+                    ArrayList<String> temp_string_list = new ArrayList<>();
                     if (multiList != null && multiList.size() > 0) {
                         for (int i = 0; i < multiList.size(); i++) {
                             if (multiList.get(i).getCheck()) {
@@ -152,7 +152,9 @@ public class MultiSelectionDialog extends AppCompatActivity {
                                 assetValue = getAssetsValue.substring(0, getAssetsValue.length() - 1);
                             }
                         }
-                        multiSelectionListener.onMultiDialogItemsSelected(assetValue, tag,temp_string_list);
+                        multiSelectionListener.onMultiDialogItemsSelected(assetValue, tag, temp_string_list);
+                    } else {
+                        multiSelectionListener.onMultiDialogError("List is null or empty", tag);
                     }
 
                     dialog.dismiss();
@@ -191,11 +193,11 @@ public class MultiSelectionDialog extends AppCompatActivity {
 ////            });
 //
             if (list != null && list.size() > 0) {
-                dialogAdapter = new MulitpleSelectionAdapter(multiList,currentField,context,headerColor);
+                dialogAdapter = new MulitpleSelectionAdapter(multiList, currentField, context, headerColor);
                 recyclerView.setAdapter(dialogAdapter);
                 dialog.show();
             } else {
-                Toast.makeText(context, "List is empty", Toast.LENGTH_SHORT).show();
+                multiSelectionListener.onMultiDialogError("List is null or empty", tag);
             }
 
             dialog.show();
