@@ -1,7 +1,7 @@
 # Welcome to SelectionDialog!
 
-[![Release](https://jitpack.io/v/User/Repo.svg)]
-(https://jitpack.io/#AndroidLibrariesYoutube/SelectionDialog)
+![Release](https://jitpack.io/v/AndroidLibrariesYoutube/SelectionDialog.svg)
+
 Hello World. 
 Enable Selections features. Now easy with SelectionDialog android library. You can now enable Single selection and Multiple selection features in your app easily.
 
