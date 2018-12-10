@@ -20,7 +20,7 @@ Enable Selections features. Now easy with SelectionDialog android library. You c
 
 ```css
 dependencies {
-	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:0.1.9'
+	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:1.0.0'
 	}
 ```
 
