@@ -1,5 +1,7 @@
 # Welcome to SelectionDialog!
 
+![Release](https://jitpack.io/v/AndroidLibrariesYoutube/SelectionDialog.svg)
+
 Hello World. 
 Enable Selections features. Now easy with SelectionDialog android library. You can now enable Single selection and Multiple selection features in your app easily.
 
@@ -20,7 +22,7 @@ Enable Selections features. Now easy with SelectionDialog android library. You c
 
 ```css
 dependencies {
-	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:0.1.9'
+	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:1.0.0'
 	}
 ```
 
@@ -89,7 +91,7 @@ Get value, positions, TAG and error from dialog.
 Using MultiSelection is also not that tough.
 
 **Step 1**
-Create class of SingleSelectionDialog for using the Single Selection.
+Create class of MultiSelectionDialog for using the Multi Selection.
 
   
 
@@ -139,7 +141,21 @@ Get values, selected item list,  TAG and error from dialog.
 ## Author
 [Dheeraj Rijhwani (Android Developer)](https://www.youtube.com/channel/UCEhHMXJs1V4mXGfJ4pSWaoA)
 
+## Licence
 
+```
+Copyright 2018 Dheeraj Rijhwani
 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
