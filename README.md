@@ -91,7 +91,7 @@ Get value, positions, TAG and error from dialog.
 Using MultiSelection is also not that tough.
 
 **Step 1**
-Create class of SingleSelectionDialog for using the Single Selection.
+Create class of MultiSelectionDialog for using the Multi Selection.
 
   
 
@@ -144,7 +144,7 @@ Get values, selected item list,  TAG and error from dialog.
 ## Licence
 
 ```
-Copyright 2018 Mate Siede
+Copyright 2018 Dheeraj Rijhwani
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
