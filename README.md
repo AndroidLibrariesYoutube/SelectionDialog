@@ -55,6 +55,7 @@ Add extra features to your dialog.
 
     singleSelectionDialog.setColor(getResources().getColor(R.color.colorPrimaryDark));  
     singleSelectionDialog.setTitle("Select Number");  
+    singleSelectionDialog.setTextColor(getResources().getColor(R.color.colorAccent));
     singleSelectionDialog.setSelectedField(currentField);
 
 
@@ -110,6 +111,7 @@ Add extra features to your dialog.
 
     multiSelectionDialog.setColor(getResources().getColor(R.color.colorPrimaryDark));  
     multiSelectionDialog.setTitle("Select Number");  
+    multiSelectionDialog.setTextColor(getResources().getColor(R.color.colorAccent));
     multiSelectionDialog.setSelectedFields(currentField);
 
 **Step 3**
