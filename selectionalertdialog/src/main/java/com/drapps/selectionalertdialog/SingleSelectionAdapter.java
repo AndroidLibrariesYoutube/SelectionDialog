@@ -2,6 +2,7 @@ package com.drapps.selectionalertdialog;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
     private List<String> dataList = new ArrayList<>();
     private Context context;
     private String currentField;
-    private int color;
+    private int color, textColor;
+    private SingleSelectionListener singleSelectionListener;
+    private String tag = "";
 
     public class SingleSelectionHolder extends RecyclerView.ViewHolder {
 
@@ -31,11 +34,14 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
     }
 
 
-    public SingleSelectionAdapter(ArrayList<String> contentList, Context mContext, String currentField, int radioColor) {
+    public SingleSelectionAdapter(SingleSelectionListener listener, ArrayList<String> contentList, Context mContext, String tag, String currentField, int radioColor, int textcolor) {
         this.context = mContext;
         this.dataList = contentList;
         this.currentField = currentField;
         this.color = radioColor;
+        this.singleSelectionListener = listener;
+        this.tag = tag;
+        this.textColor = textcolor;
     }
 
     @Override
@@ -50,10 +56,20 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
 
         if (color != 0) {
             try {
-                holder.radioButton.setButtonTintList(ColorStateList.valueOf(color));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.radioButton.setButtonTintList(ColorStateList.valueOf(color));
+                }
                 holder.line.setBackgroundColor(color);
             } catch (Exception e) {
+                singleSelectionListener.onDialogError(e.toString(), tag);
 
+            }
+        }
+        if (color != 0) {
+            try {
+                holder.radioButton.setTextColor(ColorStateList.valueOf(textColor));
+            } catch (Exception e) {
+                singleSelectionListener.onDialogError(e.toString(), tag);
             }
         }
         if (dataList.get(position).equals(currentField)) {

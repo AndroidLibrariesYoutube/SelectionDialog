@@ -2,6 +2,7 @@ package com.drapps.selectionalertdialog;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelectionAdapter.MulitpleSelectionHolder> {
     private List<MultiSelection> dataList;
-    Context context;
-    List<MultiSelection> currentField;
-    String selectedItems = "";
-    int color;
+    private Context context;
+    private List<MultiSelection> currentField;
+    private String selectedItems = "";
+    private int color, textColor;
+    private MultiSelectionListener multiSelectionListener;
+    private String tag = "";
+
     public class MulitpleSelectionHolder extends RecyclerView.ViewHolder {
 
         public CheckBox checkBox;
@@ -32,12 +36,15 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
     }
 
 
-    public MulitpleSelectionAdapter(List<MultiSelection> contentList, String title, Context context,int checkBoxColor) {
+    public MulitpleSelectionAdapter(MultiSelectionListener listener, List<MultiSelection> contentList, String title, String dialogTAG, Context context, int checkBoxColor, int textcolor) {
         this.context = context;
         this.dataList = contentList;
-        this.color =  checkBoxColor;
+        this.color = checkBoxColor;
         this.selectedItems = title;
+        this.textColor = textcolor;
         checkExist(selectedItems);
+        multiSelectionListener = listener;
+        this.tag = dialogTAG;
 
     }
 
@@ -49,16 +56,26 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
         return new MulitpleSelectionAdapter.MulitpleSelectionHolder(itemView);
     }
 
-    public void onBindViewHolder(final MulitpleSelectionAdapter.MulitpleSelectionHolder holder, final int position) {
+    public void onBindViewHolder(final MulitpleSelectionHolder holder, final int position) {
         holder.checkBox.setText(dataList.get(position).getTitle());
         if (color != 0) {
             try {
-                holder.checkBox.setButtonTintList(ColorStateList.valueOf(color));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    holder.checkBox.setButtonTintList(ColorStateList.valueOf(color));
+                }
                 holder.line.setBackgroundColor(color);
             } catch (Exception e) {
-
+                multiSelectionListener.onMultiDialogError(e.toString(), tag);
             }
         }
+        if (textColor != 0) {
+            try {
+                holder.checkBox.setTextColor(ColorStateList.valueOf(textColor));
+            } catch (Exception e) {
+                multiSelectionListener.onMultiDialogError(e.toString(), tag);
+            }
+        }
+
 
         holder.setIsRecyclable(false);
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +112,8 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
                     }
                 }
             }
+        } else {
+            multiSelectionListener.onMultiDialogError("List is null or empty", tag);
         }
 
 

@@ -32,7 +32,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
     private Boolean isSearchEnabled = false;
     SingleSelectionAdapter dialogAdapter;
     private String currentField = "", currentValue = "", currentPosition = "", tag = "",hintText="Search here";
-    private int headerColor;
+    private int headerColor,textColor;
     SingleSelectionListener singleSelectionListener;
 
 
@@ -61,6 +61,10 @@ public class SingleSelectionDialog extends AppCompatActivity {
         } else {
             this.headerTitle = "Select";
         }
+    }
+
+    public void setTextColor(int color){
+        this.textColor = color;
     }
 
     public void enableSearch(Boolean value,String hint) {
@@ -146,7 +150,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
 
                     if (etSearch.getText().toString().equals("")) {
                         if (list != null && list.size() > 0) {
-                            dialogAdapter = new SingleSelectionAdapter(list, context, currentField,headerColor);
+                            dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,list, context,tag, currentField,headerColor,textColor);
                             dialogAdapter.notifyDataSetChanged();
                             recyclerView.setAdapter(dialogAdapter);
                         } else {
@@ -167,7 +171,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
             });
 
             if (list != null && list.size() > 0) {
-                dialogAdapter = new SingleSelectionAdapter(list, context, currentField,headerColor);
+                dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,list, context,tag, currentField,headerColor,textColor);
                 recyclerView.setAdapter(dialogAdapter);
                 dialog.show();
             } else {
@@ -196,7 +200,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
 
         temp_data_list = new ArrayList<>();
         temp_data_list.addAll(temp_list);
-        dialogAdapter = new SingleSelectionAdapter(temp_data_list, context, currentField,headerColor);
+        dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,temp_data_list, context, tag,currentField,headerColor,textColor);
 
         dialogAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(dialogAdapter);

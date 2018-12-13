@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +35,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
     private Boolean isSearchEnabled = false;
     MulitpleSelectionAdapter dialogAdapter;
     private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
-    private int headerColor;
+    private int headerColor,textColor;
     MultiSelectionListener multiSelectionListener;
 
 
@@ -74,6 +75,9 @@ public class MultiSelectionDialog extends AppCompatActivity {
         }
     }
 
+    public void setTextColor(int color){
+        this.textColor = color;
+    }
 //    public void enableSearch(Boolean value, String hint) {
 //        isSearchEnabled = value;
 //        hintText = hint;
@@ -161,7 +165,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
 
                 }
             });
-//
+
 //            etSearch.addTextChangedListener(new TextWatcher() {
 //                @Override
 //                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -193,7 +197,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
 ////            });
 //
             if (list != null && list.size() > 0) {
-                dialogAdapter = new MulitpleSelectionAdapter(multiList, currentField, context, headerColor);
+                dialogAdapter = new MulitpleSelectionAdapter(multiSelectionListener,multiList, currentField,tag, context, headerColor,textColor);
                 recyclerView.setAdapter(dialogAdapter);
                 dialog.show();
             } else {
