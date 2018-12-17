@@ -45,10 +45,10 @@ Create object of SingleSelectionDialog with Builder for using the Single Selecti
 	 SingleSelectionDialog singleSelectionDialog = new SingleSelectionDialog.Builder(context, "TEST")
                 .setTitle("Select Number")
                 .setContent(stringArrayList) // Set ArrayList you want to show.
-                .setColor(getResources().getColor(R.color.colorPrimaryDark))	 // Set Dialog Color.
-                .setSelectedField(currentField)					// Set Current or Default field if any.
-                .enableSearch(true, "Search your number")			//Set Search Feature.
-                .setTextColor(getResources().getColor(R.color.colorAccent))	//Set Text Color.
+                .setColor(getResources().getColor(R.color.colorPrimaryDark))	 
+                .setSelectedField(currentField)					
+                .enableSearch(true, "Search your number")			
+                .setTextColor(getResources().getColor(R.color.colorAccent))	
                 .setListener(new SingleSelectionListener() {
                     @Override
                     public void onDialogItemSelected(String s, int position, String tag) {
@@ -58,7 +58,7 @@ Create object of SingleSelectionDialog with Builder for using the Single Selecti
                     @Override
                     public void onDialogError(String error, String tag) {
                     }
-                })								//Set Listener.
+                })								
                 .build();
             
       
