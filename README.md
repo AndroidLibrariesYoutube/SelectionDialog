@@ -68,10 +68,10 @@ Call show(); method for showing the dialog.
 
     singleSelectionDialog.show();
     
- **Step 3**
+**Step 3**
  Set Default value or Current value to Dialog.
 
-singleSelectionDialog.setSelectedField(value); //Default value must be of String type.
+    singleSelectionDialog.setSelectedField(value); //Default value must be of String type.
 
 
 ## How do I use Multi Selection Dialog?
@@ -113,7 +113,7 @@ Call show(); method for showing the dialog.
  **Step 3**
  Set Default values or Current values to Dialog.
 
-multiSelectionDialog.setSelectedFields(value); //Default value must be of String type.
+    multiSelectionDialog.setSelectedFields(value); //Default values must be of String type.
 
 ## Author
 [Dheeraj Rijhwani (Android Developer)](https://www.youtube.com/channel/UCEhHMXJs1V4mXGfJ4pSWaoA)
