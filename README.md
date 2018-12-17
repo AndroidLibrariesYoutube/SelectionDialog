@@ -2,6 +2,8 @@
 
 ![Release](https://jitpack.io/v/AndroidLibrariesYoutube/SelectionDialog.svg)
 
+![Release](https://img.shields.io/badge/Android%20Arsenal-SelectionDialog-green.svg?style=flat)
+
 Hello World. 
 Enable Selections features. Now easy with SelectionDialog android library. You can now enable Single selection and Multiple selection features in your app easily.
 
