@@ -22,7 +22,7 @@ Enable Selections features. Now easy with SelectionDialog android library. You c
 
 ```css
 dependencies {
-	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:1.0.1'
+	        implementation 'com.github.AndroidLibrariesYoutube:SelectionDialog:1.0.2'
 	}
 ```
 
@@ -37,51 +37,41 @@ dependencies {
 Using SelectionDialog is pretty simple.
 
 **Step 1**
-Create class of SingleSelectionDialog for using the Single Selection.
+Create object of SingleSelectionDialog with Builder for using the Single Selection.
 
   
 
-      // First parameter you need to pass is this means you need to implement a SingleSelectionListener in your activity then activity context and last is TAG.
+	//First parameter need to pass is current context and then TAG. TAG is for determine if you are using dialog multiple times.            
+	 SingleSelectionDialog singleSelectionDialog = new SingleSelectionDialog.Builder(context, "TEST")
+                .setTitle("Select Number")
+                .setContent(stringArrayList) // Set ArrayList you want to show.
+                .setColor(getResources().getColor(R.color.colorPrimaryDark))	 // Set Dialog Color.
+                .setSelectedField(currentField)					// Set Current or Default field if any.
+                .enableSearch(true, "Search your number")			//Set Search Feature.
+                .setTextColor(getResources().getColor(R.color.colorAccent))	//Set Text Color.
+                .setListener(new SingleSelectionListener() {
+                    @Override
+                    public void onDialogItemSelected(String s, int position, String tag) {
+                       
+                    }
+
+                    @Override
+                    public void onDialogError(String error, String tag) {
+                    }
+                })								//Set Listener.
+                .build();
             
-            
-	  SingleSelectionDialog singleSelectionDialog = new SingleSelectionDialog(this, context, "TAG");
-            
-      //Then you need to the ArrayList which you want to show. ArrayList must be of String type.
-      singleSelectionDialog.setContent(stringArrayList);  
-        
+      
+       
 **Step 2**
-Add extra features to your dialog.
-    
-
-    singleSelectionDialog.setColor(getResources().getColor(R.color.colorPrimaryDark));  
-    singleSelectionDialog.setTitle("Select Number");  
-    singleSelectionDialog.setTextColor(getResources().getColor(R.color.colorAccent));
-    singleSelectionDialog.setSelectedField(currentField);
-
-
-
-**Step 3**
 Call show(); method for showing the dialog.    
 
     singleSelectionDialog.show();
-**Step 4**
-Inherit SingleSelectionListener listener in your activity like this.
+    
+ **Step 3**
+ Set Default value or Current value to Dialog.
 
-    public class MainActivity extends AppCompatActivity implements SingleSelectionListener
-**Step 5**
-Get value, positions, TAG and error from dialog.
-
-   
-
-    @Override  
-    public void onDialogItemSelected(String s, int position, String tag) {  
-      
-    }  
-      
-    @Override  
-    public void onDialogError(String error, String tag) {  
-      
-    }
+singleSelectionDialog.setSelectedField(value); //Default value must be of String type.
 
 
 ## How do I use Multi Selection Dialog?
@@ -92,53 +82,38 @@ Get value, positions, TAG and error from dialog.
 Using MultiSelection is also not that tough.
 
 **Step 1**
-Create class of MultiSelectionDialog for using the Multi Selection.
+Create object of MultiSelectionDialog with Builder for using the Multiple Selection.
 
   
 
-      // First parameter you need to pass is this means you need to implement a MultiSelectionListenerin your activity then activity context and last is TAG.
-            
-            
-	MultiSelectionDialog multiSelectionDialog = new MultiSelectionDialog(this, context, "TAG");  
-            
-      //Then you need to the ArrayList which you want to show. ArrayList must be of String type.
-    multiSelectionDialog.setContent(stringArrayList);
+      	//First parameter need to pass is current context and then TAG. TAG is for determine if you are using dialog multiple times.            
+	   MultiSelectionDialog multiSelectionDialog = new MultiSelectionDialog.Builder(context, "TEST")
+                .setTitle("Select Number")
+                .setContent(stringArrayList)
+                .setColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setSelectedField(currentField)
+                .setTextColor(getResources().getColor(R.color.colorAccent))
+                .setListener(new MultiSelectionListener() {
+                    @Override
+                    public void onMultiDialogItemsSelected(String s, String tag, ArrayList<String> selectedItemList) {
+                    }
 
-        
+                    @Override
+                    public void onMultiDialogError(String error, String tag) {
+                    }
+                })
+                .build();
+
+
 **Step 2**
-Add extra features to your dialog.
-    
-
-    multiSelectionDialog.setColor(getResources().getColor(R.color.colorPrimaryDark));  
-    multiSelectionDialog.setTitle("Select Number");  
-    multiSelectionDialog.setTextColor(getResources().getColor(R.color.colorAccent));
-    multiSelectionDialog.setSelectedFields(currentField);
-
-**Step 3**
 Call show(); method for showing the dialog.    
 
       multiSelectionDialog.show();
 
-**Step 4**
-Inherit MultiSelectionListener listener in your activity like this.
+ **Step 3**
+ Set Default values or Current values to Dialog.
 
-    public class MainActivity extends AppCompatActivity implements MultiSelectionListener
-**Step 5**
-Get values, selected item list,  TAG and error from dialog.
-
-   
-
-      
-    @Override  
-    public void onMultiDialogItemsSelected(String s, String tag, ArrayList<String> selectedItemList) {  
-      
-    }  
-      
-    @Override  
-    public void onMultiDialogError(String error, String tag) {  
-      
-    }
-
+multiSelectionDialog.setSelectedFields(value); //Default value must be of String type.
 
 ## Author
 [Dheeraj Rijhwani (Android Developer)](https://www.youtube.com/channel/UCEhHMXJs1V4mXGfJ4pSWaoA)
