@@ -61,15 +61,20 @@ public class SingleSelectionAdapter extends RecyclerView.Adapter<SingleSelection
                 }
                 holder.line.setBackgroundColor(color);
             } catch (Exception e) {
-                singleSelectionListener.onDialogError(e.toString(), tag);
+                if (singleSelectionListener != null) {
 
+                    singleSelectionListener.onDialogError(e.toString(), tag);
+                }
             }
         }
         if (color != 0) {
             try {
                 holder.radioButton.setTextColor(ColorStateList.valueOf(textColor));
             } catch (Exception e) {
-                singleSelectionListener.onDialogError(e.toString(), tag);
+                if (singleSelectionListener != null) {
+
+                    singleSelectionListener.onDialogError(e.toString(), tag);
+                }
             }
         }
         if (dataList.get(position).equals(currentField)) {

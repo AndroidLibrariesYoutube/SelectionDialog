@@ -6,6 +6,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.drapps.selectionalertdialog.R;
+import com.drapps.selectionalertdialog.SingleSelectionAdapter;
+import com.drapps.selectionalertdialog.SingleSelectionListener;
 
 import java.util.ArrayList;
 
@@ -31,8 +36,8 @@ public class SingleSelectionDialog extends AppCompatActivity {
     private String headerTitle = "Select";
     private Boolean isSearchEnabled = false;
     SingleSelectionAdapter dialogAdapter;
-    private String currentField = "", currentValue = "", currentPosition = "", tag = "",hintText="Search here";
-    private int headerColor,textColor;
+    private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
+    private int headerColor, textColor;
     SingleSelectionListener singleSelectionListener;
 
 
@@ -42,42 +47,20 @@ public class SingleSelectionDialog extends AppCompatActivity {
         setContentView(R.layout.single_selection_dialog);
     }
 
-    public SingleSelectionDialog(SingleSelectionListener singleSelectionListener, Context mContext,String mTag) {
-        this.singleSelectionListener = singleSelectionListener;
-        this.context = mContext;
-        this.tag = mTag;
-    }
-
-
-    public void setContent(ArrayList<String> contentProvide) {
-        list = contentProvide;
+    private SingleSelectionDialog(Builder builder) {
+        context = builder.context;
+        list = builder.list;
         temp_data_list.clear();
-        temp_data_list = contentProvide;
-    }
-
-    public void setTitle(String mTitle) {
-        if (mTitle != null && !mTitle.equals("")) {
-            this.headerTitle = mTitle;
-        } else {
-            this.headerTitle = "Select";
-        }
-    }
-
-    public void setTextColor(int color){
-        this.textColor = color;
-    }
-
-    public void enableSearch(Boolean value,String hint) {
-        isSearchEnabled = value;
-        hintText = hint;
-    }
-
-    public void setColor(int color) {
-        headerColor = color;
-    }
-
-    public void setSelectedField(String selectedField) {
-        currentField = selectedField;
+        temp_data_list = builder.list;
+        headerTitle = builder.headerTitle;
+        isSearchEnabled = builder.isSearchEnabled;
+        tag = builder.tag;
+        hintText = builder.hintText;
+        currentField = builder.currentField;
+        headerColor = builder.headerColor;
+        textColor = builder.textColor;
+        singleSelectionListener = builder.singleSelectionListener;
+        Log.d("TAG--", headerTitle);
     }
 
     public void show() {
@@ -95,9 +78,9 @@ public class SingleSelectionDialog extends AppCompatActivity {
             final EditText etSearch = convertView.findViewById(R.id.et_search_single_selection);
             tvTitle.setText(headerTitle);
 
-            if (isSearchEnabled){
+            if (isSearchEnabled) {
                 etSearch.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 etSearch.setVisibility(View.GONE);
             }
             if (headerColor != 0) {
@@ -110,7 +93,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
                 }
             }
 
-            if(hintText!=null && !hintText.equals("")){
+            if (hintText != null && !hintText.equals("")) {
                 etSearch.setHint(hintText);
             }
             imgCancel.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +112,9 @@ public class SingleSelectionDialog extends AppCompatActivity {
                                     currentValue = temp_data_list.get(position);
                                     currentField = getCurrentField(list.get(position));
                                     currentPosition = getCurrentPosition(currentValue);
-                                    singleSelectionListener.onDialogItemSelected(currentValue, Integer.parseInt(currentPosition),tag);
+                                    if (singleSelectionListener != null) {
+                                        singleSelectionListener.onDialogItemSelected(currentValue, Integer.parseInt(currentPosition), tag);
+                                    }
                                 }
 
                                 @Override
@@ -150,11 +135,14 @@ public class SingleSelectionDialog extends AppCompatActivity {
 
                     if (etSearch.getText().toString().equals("")) {
                         if (list != null && list.size() > 0) {
-                            dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,list, context,tag, currentField,headerColor,textColor);
+                            dialogAdapter = new SingleSelectionAdapter(singleSelectionListener, list, context, tag, currentField, headerColor, textColor);
                             dialogAdapter.notifyDataSetChanged();
                             recyclerView.setAdapter(dialogAdapter);
                         } else {
-                            singleSelectionListener.onDialogError("List is empty or null",tag);
+                            if (singleSelectionListener != null) {
+
+                                singleSelectionListener.onDialogError("List is empty or null", tag);
+                            }
                         }
 
 
@@ -171,7 +159,7 @@ public class SingleSelectionDialog extends AppCompatActivity {
             });
 
             if (list != null && list.size() > 0) {
-                dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,list, context,tag, currentField,headerColor,textColor);
+                dialogAdapter = new SingleSelectionAdapter(singleSelectionListener, list, context, tag, currentField, headerColor, textColor);
                 recyclerView.setAdapter(dialogAdapter);
                 dialog.show();
             } else {
@@ -194,13 +182,17 @@ public class SingleSelectionDialog extends AppCompatActivity {
                 }
             }
         } else {
-            singleSelectionListener.onDialogError("List is empty or null",tag);
+            if (singleSelectionListener != null) {
 
+
+                singleSelectionListener.onDialogError("List is empty or null", tag);
+
+            }
         }
 
         temp_data_list = new ArrayList<>();
         temp_data_list.addAll(temp_list);
-        dialogAdapter = new SingleSelectionAdapter(singleSelectionListener,temp_data_list, context, tag,currentField,headerColor,textColor);
+        dialogAdapter = new SingleSelectionAdapter(singleSelectionListener, temp_data_list, context, tag, currentField, headerColor, textColor);
 
         dialogAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(dialogAdapter);
@@ -220,6 +212,10 @@ public class SingleSelectionDialog extends AppCompatActivity {
         return "";
     }
 
+    public void setSelectedField(String selectedField) {
+        currentField = selectedField;
+    }
+
     public String getCurrentPosition(String field) {
         if (list != null && list.size() > 0) {
 
@@ -230,6 +226,69 @@ public class SingleSelectionDialog extends AppCompatActivity {
             }
         }
         return "";
+    }
+
+    public static class Builder {
+        //required
+
+        //optional
+        private Context context;
+        private ArrayList<String> list = new ArrayList<>();
+        private String headerTitle = "Select";
+        private Boolean isSearchEnabled = false;
+        private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
+        private int headerColor, textColor;
+        SingleSelectionListener singleSelectionListener;
+
+        public Builder(Context ctx, String tag) {
+            this.context = ctx;
+            this.tag = tag;
+        }
+
+        public Builder setContent(ArrayList<String> contentProvide) {
+            this.list = contentProvide;
+            return this;
+        }
+
+        public Builder setTitle(String value) {
+            if (value != null && !value.equals("")) {
+                this.headerTitle = value;
+            } else {
+                this.headerTitle = "Select";
+            }
+            return this;
+        }
+
+        public Builder setTextColor(int color) {
+            this.textColor = color;
+            return this;
+        }
+
+        public Builder enableSearch(Boolean value, String hint) {
+            this.isSearchEnabled = value;
+            this.hintText = hint;
+            return this;
+        }
+
+        public Builder setColor(int color) {
+            headerColor = color;
+            return this;
+        }
+
+        public Builder setListener(SingleSelectionListener listener) {
+            singleSelectionListener = listener;
+            return this;
+        }
+
+
+        public Builder setSelectedField(String selectedField) {
+            currentField = selectedField;
+            return this;
+        }
+
+        public SingleSelectionDialog build() {
+            return new SingleSelectionDialog(this);
+        }
     }
 
 

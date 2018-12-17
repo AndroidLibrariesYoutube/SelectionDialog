@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
+import com.drapps.selectionalertdialog.MultiSelection;
+import com.drapps.selectionalertdialog.MultiSelectionListener;
+import com.drapps.selectionalertdialog.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -65,14 +69,20 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
                 }
                 holder.line.setBackgroundColor(color);
             } catch (Exception e) {
-                multiSelectionListener.onMultiDialogError(e.toString(), tag);
+                if (multiSelectionListener != null) {
+
+                    multiSelectionListener.onMultiDialogError(e.toString(), tag);
+                }
             }
         }
         if (textColor != 0) {
             try {
                 holder.checkBox.setTextColor(ColorStateList.valueOf(textColor));
             } catch (Exception e) {
-                multiSelectionListener.onMultiDialogError(e.toString(), tag);
+                if (multiSelectionListener != null) {
+
+                    multiSelectionListener.onMultiDialogError(e.toString(), tag);
+                }
             }
         }
 
@@ -113,7 +123,10 @@ public class MulitpleSelectionAdapter extends RecyclerView.Adapter<MulitpleSelec
                 }
             }
         } else {
-            multiSelectionListener.onMultiDialogError("List is null or empty", tag);
+            if (multiSelectionListener != null) {
+
+                multiSelectionListener.onMultiDialogError("List is null or empty", tag);
+            }
         }
 
 
