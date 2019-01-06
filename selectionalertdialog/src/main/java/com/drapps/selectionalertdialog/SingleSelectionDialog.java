@@ -1,8 +1,11 @@
 package com.drapps.selectionalertdialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,7 +42,6 @@ public class SingleSelectionDialog extends AppCompatActivity {
     private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
     private int headerColor, textColor;
     SingleSelectionListener singleSelectionListener;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -216,6 +218,13 @@ public class SingleSelectionDialog extends AppCompatActivity {
         currentField = selectedField;
     }
 
+    public void dismiss() {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+
     public String getCurrentPosition(String field) {
         if (list != null && list.size() > 0) {
 
@@ -239,10 +248,12 @@ public class SingleSelectionDialog extends AppCompatActivity {
         private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
         private int headerColor, textColor;
         SingleSelectionListener singleSelectionListener;
+        int style;
 
         public Builder(Context ctx, String tag) {
             this.context = ctx;
             this.tag = tag;
+
         }
 
         public Builder setContent(ArrayList<String> contentProvide) {
@@ -280,7 +291,6 @@ public class SingleSelectionDialog extends AppCompatActivity {
             return this;
         }
 
-
         public Builder setSelectedField(String selectedField) {
             currentField = selectedField;
             return this;
@@ -290,6 +300,5 @@ public class SingleSelectionDialog extends AppCompatActivity {
             return new SingleSelectionDialog(this);
         }
     }
-
 
 }
