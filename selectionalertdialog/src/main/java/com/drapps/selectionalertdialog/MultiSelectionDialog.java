@@ -54,7 +54,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
     private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here", positiveText = "", negativeText = "";
     private int headerColor, textColor, positiveTextColor, negativeTextColor;
     MultiSelectionListener multiSelectionListener;
-    private boolean doneVisibility;
+    private boolean doneVisibility, positiveVisiblity, negativeVisiblity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +86,8 @@ public class MultiSelectionDialog extends AppCompatActivity {
         positiveText = builder.positiveText;
         negativeText = builder.negativeText;
         doneVisibility = builder.doneVisibility;
+        positiveVisiblity = builder.positiveVisibility;
+        negativeVisiblity = builder.negativeVisibility;
         Log.d("TAG--", headerTitle);
     }
 
@@ -125,17 +127,30 @@ public class MultiSelectionDialog extends AppCompatActivity {
             }
             if (positiveTextColor != 0) {
                 try {
-                    tvPositive.setBackgroundColor(positiveTextColor);
+                    tvPositive.setTextColor(positiveTextColor);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (negativeTextColor != 0) {
                 try {
-                    tvPositive.setBackgroundColor(negativeTextColor);
+                    tvPositive.setTextColor(negativeTextColor);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            if (positiveVisiblity) {
+                tvPositive.setVisibility(View.VISIBLE);
+            } else {
+                tvPositive.setVisibility(View.INVISIBLE);
+            }
+            if (negativeVisiblity) {
+                tvNegative.setVisibility(View.VISIBLE);
+            } else {
+                tvNegative.setVisibility(View.INVISIBLE);
+            }
+            if (negativeVisiblity && positiveVisiblity) {
+                linearBtn.setVisibility(View.GONE);
             }
 
             recyclerView.addOnItemTouchListener(
@@ -248,7 +263,7 @@ public class MultiSelectionDialog extends AppCompatActivity {
         private String currentField = "", tag = "", hintText = "Search here", positiveText = "", negativeText = "";
         private int headerColor, textColor, positiveColor, negativeColor;
         MultiSelectionListener multiSelectionListener;
-        private boolean doneVisibility = true;
+        private boolean doneVisibility = true, negativeVisibility = true, positiveVisibility = true;
 
         public Builder(Context ctx, String tag) {
             this.context = ctx;
@@ -280,15 +295,18 @@ public class MultiSelectionDialog extends AppCompatActivity {
             return this;
         }
 
-        public Builder setPositiveButton(String text, int color) {
+        public Builder setPositiveButton(String text, int color, boolean visible) {
             positiveColor = color;
             positiveText = text;
+            positiveVisibility = visible;
+
             return this;
         }
 
-        public Builder setNegativeButton(String text, int color) {
+        public Builder setNegativeButton(String text, int color, boolean visible) {
             negativeColor = color;
             negativeText = text;
+            negativeVisibility = visible;
             return this;
         }
 
