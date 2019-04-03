@@ -51,10 +51,10 @@ public class MultiSelectionDialog extends AppCompatActivity {
     private ArrayList<MultiSelection> temp_data_list = new ArrayList<>();
     private String headerTitle = "Select";
     MulitpleSelectionAdapter dialogAdapter;
-    private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here";
-    private int headerColor, textColor;
+    private String currentField = "", currentValue = "", currentPosition = "", tag = "", hintText = "Search here", positiveText = "", negativeText = "";
+    private int headerColor, textColor, positiveTextColor, negativeTextColor;
     MultiSelectionListener multiSelectionListener;
-
+    private boolean doneVisibility;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +81,11 @@ public class MultiSelectionDialog extends AppCompatActivity {
         headerColor = builder.headerColor;
         textColor = builder.textColor;
         multiSelectionListener = builder.multiSelectionListener;
+        negativeTextColor = builder.negativeColor;
+        positiveTextColor = builder.positiveColor;
+        positiveText = builder.positiveText;
+        negativeText = builder.negativeText;
+        doneVisibility = builder.doneVisibility;
         Log.d("TAG--", headerTitle);
     }
 
@@ -100,11 +105,34 @@ public class MultiSelectionDialog extends AppCompatActivity {
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(layoutManager);
             LinearLayout header = convertView.findViewById(R.id.linear_multi_dialog);
+            LinearLayout linearBtn = convertView.findViewById(R.id.linear_btn_multi_dialog);
+            TextView tvPositive = convertView.findViewById(R.id.tv_positive_multi_dialog);
+            TextView tvNegative = convertView.findViewById(R.id.tv_negative_multi_dialog);
             tvTitle.setText(headerTitle);
-
+            tvPositive.setText(positiveText);
+            tvNegative.setText(negativeText);
+            if (doneVisibility) {
+                imgDone.setVisibility(View.VISIBLE);
+            } else {
+                imgDone.setVisibility(View.GONE);
+            }
             if (headerColor != 0) {
                 try {
                     header.setBackgroundColor(headerColor);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (positiveTextColor != 0) {
+                try {
+                    tvPositive.setBackgroundColor(positiveTextColor);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (negativeTextColor != 0) {
+                try {
+                    tvPositive.setBackgroundColor(negativeTextColor);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -153,15 +181,52 @@ public class MultiSelectionDialog extends AppCompatActivity {
 
                 }
             });
+            tvPositive.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String getAssetsValue = "";
+                    String assetValue = "";
+                    ArrayList<String> temp_string_list = new ArrayList<>();
+                    if (multiList != null && multiList.size() > 0) {
+                        for (int i = 0; i < multiList.size(); i++) {
+                            if (multiList.get(i).getCheck()) {
+                                temp_string_list.add(multiList.get(i).getTitle());
+                                getAssetsValue += multiList.get(i).getTitle() + ",";
+                                assetValue = getAssetsValue.substring(0, getAssetsValue.length() - 1);
+                            }
+                        }
+                        if (multiSelectionListener != null) {
+                            multiSelectionListener.onMultiDialogItemsSelected(assetValue, tag, temp_string_list);
+                        }
+                    } else {
+                        if (multiSelectionListener != null) {
+                            multiSelectionListener.onMultiDialogError("List is null or empty", tag);
+                        }
+                    }
+
+                    dialog.dismiss();
+
+                }
+            });
+            tvNegative.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
 
             if (list != null && list.size() > 0) {
                 dialogAdapter = new MulitpleSelectionAdapter(multiSelectionListener, multiList, currentField, tag, context, headerColor, textColor);
                 recyclerView.setAdapter(dialogAdapter);
                 dialog.show();
-            } else { if (multiSelectionListener!=null){
+            } else {
+                if (multiSelectionListener != null) {
 
-                multiSelectionListener.onMultiDialogError("List is null or empty", tag);
-            }}
+                    multiSelectionListener.onMultiDialogError("List is null or empty", tag);
+                }
+            }
 
             dialog.show();
         } catch (Exception e) {
@@ -180,9 +245,10 @@ public class MultiSelectionDialog extends AppCompatActivity {
         private Context context;
         private ArrayList<String> list = new ArrayList<>();
         private String headerTitle = "Select";
-        private String currentField = "", tag = "", hintText = "Search here";
-        private int headerColor, textColor;
+        private String currentField = "", tag = "", hintText = "Search here", positiveText = "", negativeText = "";
+        private int headerColor, textColor, positiveColor, negativeColor;
         MultiSelectionListener multiSelectionListener;
+        private boolean doneVisibility = true;
 
         public Builder(Context ctx, String tag) {
             this.context = ctx;
@@ -214,8 +280,25 @@ public class MultiSelectionDialog extends AppCompatActivity {
             return this;
         }
 
+        public Builder setPositiveButton(String text, int color) {
+            positiveColor = color;
+            positiveText = text;
+            return this;
+        }
+
+        public Builder setNegativeButton(String text, int color) {
+            negativeColor = color;
+            negativeText = text;
+            return this;
+        }
+
         public Builder setListener(MultiSelectionListener listener) {
             multiSelectionListener = listener;
+            return this;
+        }
+
+        public Builder setDoneVisibility(boolean visible) {
+            doneVisibility = visible;
             return this;
         }
 
